@@ -1,8 +1,5 @@
 using System;
 using System.IO;
-using Mono.Cecil.Cil;
-using UnityEditor;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class ScreenshotHandler : MonoBehaviour

@@ -3,6 +3,6 @@
     "version": "1.0.0",
     "displayName": "Screenshot Manager",
     "description": "Literally just use it to take screenshots. Will save images to a folder called 'Screenshots'",
-    "unity": "6000.0.76f1",
+    "unity": "6000.0",
     "dependencies": {}
 }
