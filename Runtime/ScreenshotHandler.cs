@@ -2,17 +2,9 @@ using System;
 using System.IO;
 using UnityEngine;
 
-public class ScreenshotHandler : MonoBehaviour
+public static class ScreenshotHandler
 {
-    void Update() //i'll just use update for now.
-    {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            TakeScreenshot();
-        }
-    }
-
-    public void TakeScreenshot()
+    public static void TakeScreenshot()
     {
         string timestamp = DateTime.Now.ToString();
 
