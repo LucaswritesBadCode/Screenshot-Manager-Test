@@ -1,1 +1,1 @@
-this is a test.
+use ScreenshotHandler.TakeScreenshot() to screenshot!
