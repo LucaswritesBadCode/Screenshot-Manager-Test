@@ -1,0 +1,20 @@
+{
+    "name": "LucaswritesBadCode.ScreenShotManager.Tests",
+    "rootNamespace": "LucaswritesBadCode.ScreenShotManager.Tests",
+    "references": [
+        "LucaswritesBadCode.ScreenShotManager.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
