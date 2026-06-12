@@ -8,7 +8,8 @@ namespace Runtime
         [ContextMenu("Screenshot")]
         public void Screenshot()
         {
-            ScreenshotHandler.TakeScreenshot();
+            ScreenshotHandler.TakeScreenshot("Screenshots", "Test", ScreenshotFormat.Png, 1, 
+                null, null);
         }
     }
 }

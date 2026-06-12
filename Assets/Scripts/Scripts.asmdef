@@ -1,12 +1,10 @@
 {
-    "name": "LucasWritesBadCode.ScreenshotHelper.Tests.Editor",
+    "name": "Scripts",
     "rootNamespace": "",
     "references": [
         "LucasWritesBadCode.ScreenshoHelper"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

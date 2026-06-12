@@ -8,13 +8,8 @@ namespace LucasWritesBadCode.ScreenshotHelper.Runtime
     {
         private static ScreenshotRunner runner;
 
-        public static void TakeScreenshot(
-            string folder = "Screenshots",
-            string prefix = "Screenshot",
-            ScreenshotFormat format = ScreenshotFormat.Png,
-            int superscale = 1,
-            Action<string> onComplete = null,
-            Action<Exception> onError = null)
+        public static void TakeScreenshot(string folder, string prefix, ScreenshotFormat format, int superscale,
+            Action<string> onComplete, Action<Exception> onError)
         {
             string fullPath;
             try
@@ -40,24 +35,22 @@ namespace LucasWritesBadCode.ScreenshotHelper.Runtime
 #else
             string root = Application.persistentDataPath;
 #endif
-            if (root != null)
-            {
-                string folderPath = Path.Combine(root, folder);
-                Directory.CreateDirectory(folderPath);
-                return Path.Combine(folderPath, fileName);
-            }
-            throw new Exception("Could not determine root path");
+            if (root == null) throw new Exception("Could not determine root path");
+
+            string folderPath = Path.Combine(root, folder);
+            Directory.CreateDirectory(folderPath);
+            return Path.Combine(folderPath, fileName);
         }
 
         private static ScreenshotRunner EnsureRunner()
         {
             if (runner && !runner.Equals(null)) return runner;
-            
+
             GameObject go = new GameObject("ScreenshotRunner")
             {
                 hideFlags = HideFlags.HideInHierarchy
             };
-            
+
             UnityEngine.Object.DontDestroyOnLoad(go);
             runner = go.AddComponent<ScreenshotRunner>();
             return runner;
