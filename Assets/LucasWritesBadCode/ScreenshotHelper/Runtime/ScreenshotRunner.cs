@@ -3,11 +3,11 @@ using System.Collections;
 using System.IO;
 using UnityEngine;
 
-namespace LucaswritesBadCode.ScreenShotManager
+namespace LucasWritesBadCode.ScreenshotHelper.Runtime
 {
-    internal class ScreenshotRunner : MonoBehaviour
+    public class ScreenshotRunner : MonoBehaviour
     {
-        internal void StartCapture(string fullPath, ScreenshotFormat format, int superscale,
+        public void StartCapture(string fullPath, ScreenshotFormat format, int superscale,
             Action<string> onComplete, Action<Exception> onError)
         {
             StartCoroutine(CaptureCoroutine(fullPath, format, superscale, onComplete, onError));
@@ -22,7 +22,7 @@ namespace LucaswritesBadCode.ScreenShotManager
             try
             {
                 texture = ScreenCapture.CaptureScreenshotAsTexture(superscale);
-                byte[] bytes = format == ScreenshotFormat.PNG
+                byte[] bytes = format == ScreenshotFormat.Png
                     ? texture.EncodeToPNG()
                     : texture.EncodeToJPG();
                 File.WriteAllBytes(fullPath, bytes);

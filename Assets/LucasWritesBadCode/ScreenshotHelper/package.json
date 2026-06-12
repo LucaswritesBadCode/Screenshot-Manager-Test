@@ -1,5 +1,5 @@
 {
-    "name": "com.github.lucaswritesbadcode.screenshotmanager",
+    "name": "com.lucaswritesbadcode.screenshotmanager",
     "version": "1.0.0",
     "displayName": "Screenshot Manager",
     "description": "Literally just use it to take screenshots. Will save images to a folder called 'Screenshots'",
