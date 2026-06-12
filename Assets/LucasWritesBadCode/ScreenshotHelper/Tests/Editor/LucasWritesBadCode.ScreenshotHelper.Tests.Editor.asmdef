@@ -1,8 +1,12 @@
 {
-	"name": "LucaswritesBadCode.ScreenShotManager.Runtime",
-    "rootNamespace": "LucaswritesBadCode.ScreenShotManager",
-    "references": [],
-    "includePlatforms": [],
+    "name": "LucasWritesBadCode.ScreenshotHelper.Tests.Editor",
+    "rootNamespace": "",
+    "references": [
+        "LucasWritesBadCode.ScreenshoHelper"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

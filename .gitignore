@@ -23,3 +23,8 @@ Documentation~/api/
 
 # Test results
 TestResults/
+Logs
+UserSettings
+*.csproj
+*.sln
+Screenshots
