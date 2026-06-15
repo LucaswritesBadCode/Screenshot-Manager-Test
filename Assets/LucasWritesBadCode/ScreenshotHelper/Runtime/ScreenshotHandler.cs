@@ -8,8 +8,8 @@ namespace LucasWritesBadCode.ScreenshotHelper.Runtime
     {
         private static ScreenshotRunner runner;
 
-        public static void TakeScreenshot(string folder, string prefix, ScreenshotFormat format, int superscale,
-            Action<string> onComplete, Action<Exception> onError)
+        public static void TakeScreenshot(string folder = "Screenshots", string prefix = "Screenshot", ScreenshotFormat format = ScreenshotFormat.Png, int superscale = 1,
+            Action<string> onComplete = null, Action<Exception> onError =null)
         {
             string fullPath;
             try

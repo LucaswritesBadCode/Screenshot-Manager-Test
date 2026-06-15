@@ -2,7 +2,8 @@
     "name": "Scripts",
     "rootNamespace": "",
     "references": [
-        "LucasWritesBadCode.ScreenshoHelper"
+        "LucasWritesBadCode.ScreenshoHelper",
+        "LucasWritesBadCode.BowlingScoreCounter"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
