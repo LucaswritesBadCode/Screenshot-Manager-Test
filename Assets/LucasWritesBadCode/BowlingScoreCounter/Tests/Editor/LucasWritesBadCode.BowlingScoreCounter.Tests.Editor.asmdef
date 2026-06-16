@@ -1,0 +1,18 @@
+{
+    "name": "LucasWritesBadCode.BowlingScoreCounter.Tests.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:ec7ba8610f89548229ab90ee70f63bc9"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
