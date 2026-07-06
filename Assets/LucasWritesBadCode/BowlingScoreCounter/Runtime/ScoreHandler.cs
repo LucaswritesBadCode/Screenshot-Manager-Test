@@ -8,36 +8,39 @@ namespace LucasWritesBadCode.BowlingScoreCounter.Runtime
     {
         public static void GetScore(int[] pinsKnockedOverPerRound)
         {
-            var (totalScore, numberOfRounds) = CalculateScoreAndRounds(pinsKnockedOverPerRound);
-            Debug.Log($"Score = {totalScore}, Number of Rounds = {numberOfRounds}");
+            ScoreResult scoreResult = CalculateScoreResult(pinsKnockedOverPerRound);
+            Debug.Log($"Score = {scoreResult.TotalScore}, Number of Rounds = {scoreResult.NumberOfRounds}");
         }
 
-        public static (int totalScore, int numberOfRounds) CalculateScoreAndRounds(int[] pinsKnockedOverPerRound)
+        public static ScoreResult CalculateScoreResult(int[] pinsKnockedOverPerRound)
         {
-            //i'm a bit unsure if this section should be separated into different functions
+            // I'm a bit unsure if this section should be separated into different functions
             if (pinsKnockedOverPerRound == null)
                 throw new ArgumentNullException();
 
-            List<int> calculatedScoreList = new List<int> { };
+            List<int> calculatedScoreList = new List<int>();
             int numberOfRounds = 0;
 
-            foreach (var round in pinsKnockedOverPerRound)
+            foreach (int round in pinsKnockedOverPerRound)
             {
                 numberOfRounds++;
 
                 int calculatedScore = CalculateScorePerRound(round);
                 calculatedScoreList.Add(calculatedScore);
 
-                if (HasReachedMaxRounds(numberOfRounds))
-                {
-                    Debug.Log("Reached Maximum Number of Rounds");
-                    break;
-                }
+                if (!HasReachedMaxRounds(numberOfRounds)) continue;
+                
+                Debug.Log("Reached Maximum Number of Rounds");
+                break;
             }
 
-            int totalScore = CalculateTotalScore(calculatedScoreList.ToArray());
+            int totalScore = CalculateTotalScore(calculatedScoreList);
 
-            return (totalScore, numberOfRounds);
+            return new ScoreResult
+            {
+                TotalScore = totalScore,
+                NumberOfRounds = numberOfRounds
+            };
         }
 
         private static int CalculateScorePerRound(int pinsKnockedOver)
@@ -46,8 +49,8 @@ namespace LucasWritesBadCode.BowlingScoreCounter.Runtime
 
             int calculatedScore = pinsKnockedOver;
 
-            //this technically doesn't factor in spares. could be something to add
-            //though it will probably require using char or strings
+            // this technically doesn't factor in spares. could be something to add
+            // though it will probably require using char or strings
             if (pinsKnockedOver == 10)
                 calculatedScore = 30;
 
@@ -58,7 +61,7 @@ namespace LucasWritesBadCode.BowlingScoreCounter.Runtime
         {
             if (pinsKnockedOver < 0 || pinsKnockedOver > 10)
             {
-                throw new System.Exception("Not a valid number of pins. Please input a number between 0 to 10.");
+                throw new Exception("Not a valid number of pins. Please input a number between 0 to 10.");
             }
         }
 
@@ -68,14 +71,15 @@ namespace LucasWritesBadCode.BowlingScoreCounter.Runtime
             {
                 return true;
             }
+
             return false;
         }
 
-        private static int CalculateTotalScore(int[] roundScoresArray)
+        private static int CalculateTotalScore(List<int> roundScoresArray)
         {
             int totalScore = 0;
 
-            foreach (var score in roundScoresArray)
+            foreach (int score in roundScoresArray)
             {
                 totalScore += score;
             }
