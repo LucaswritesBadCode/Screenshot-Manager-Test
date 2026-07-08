@@ -5,31 +5,31 @@ using System;
 
 namespace LucasWritesBadCode.BowlingScoreCounter.Tests.Editor
 {
-    public class BowlingScoreCounterTestsOriginal : MonoBehaviour
+    public class BowlingScoreCounterTests : MonoBehaviour
     {
         [Test]
         public void When_FirstRound5_Expect_5()
         {
-            int[] pins = { 5 };
-            ScoreResult result = ScoreHandlerOriginal.CalculateScoreResult(pins);
+            string[] pins = { "5" };
+            ScoreResult result = ScoreHandler.GetScoreResult(pins);
 
             Assert.That(result.TotalScore, Is.EqualTo(5));
         }
 
         [Test]
-        public void When_Strike_Expect_negative_1()
+        public void When_Strike_Expect_10()
         {
-            int[] pins = { 10 };
-            ScoreResult result = ScoreHandlerOriginal.CalculateScoreResult(pins);
+            string[] pins = { "X" };
+            ScoreResult result = ScoreHandler.GetScoreResult(pins);
 
-            Assert.That(result.TotalScore, Is.EqualTo(-1));
+            Assert.That(result.TotalScore, Is.EqualTo(10));
         }
 
         [Test]
         public void When_Cummulative20_Expect_20()
         {
-            int[] pins = { 4, 6, 5, 3, 2 };
-            ScoreResult result = ScoreHandlerOriginal.CalculateScoreResult(pins);
+            string[] pins = { "4", "6", "5", "3", "2" };
+            ScoreResult result = ScoreHandler.GetScoreResult(pins);
 
             Assert.That(result.TotalScore, Is.EqualTo(20));
         }

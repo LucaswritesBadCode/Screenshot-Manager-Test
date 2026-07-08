@@ -5,13 +5,13 @@ namespace Runtime
 {
     public class ScoreInput : MonoBehaviour
     {
-[SerializeField] int[] scores;
+        [SerializeField] string[] scores;
 
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                ScoreHandler.GetScore(scores);
+                ScoreHandler.CalculateScore(scores);
             }
         }
     }

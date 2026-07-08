@@ -4,12 +4,13 @@ using UnityEngine;
 
 namespace LucasWritesBadCode.BowlingScoreCounter.Runtime
 {
-    public static class ScoreHandler
+    
+    public static class ScoreHandlerOriginal
     {
-        public static void GetScore(int[] pinsKnockedOverPerRound)
+        public static void GetScore(int[] pinsKnockedOver)
         {
-            ScoreResult scoreResult = CalculateScoreResult(pinsKnockedOverPerRound);
-            Debug.Log($"Score = {scoreResult.TotalScore}, Number of Rounds = {scoreResult.NumberOfRounds}");
+            ScoreResult scoreResult = CalculateScoreResult(pinsKnockedOver);
+            Debug.Log($"Score = {scoreResult.TotalScore}, Number of Rounds = {scoreResult.NumberOfFrames}");
         }
 
         public static ScoreResult CalculateScoreResult(int[] pinsKnockedOverPerRound)
@@ -29,7 +30,7 @@ namespace LucasWritesBadCode.BowlingScoreCounter.Runtime
                 calculatedScoreList.Add(calculatedScore);
 
                 if (!HasReachedMaxRounds(numberOfRounds)) continue;
-                
+
                 Debug.Log("Reached Maximum Number of Rounds");
                 break;
             }
@@ -39,7 +40,7 @@ namespace LucasWritesBadCode.BowlingScoreCounter.Runtime
             return new ScoreResult
             {
                 TotalScore = totalScore,
-                NumberOfRounds = numberOfRounds
+                NumberOfFrames = numberOfRounds
             };
         }
 

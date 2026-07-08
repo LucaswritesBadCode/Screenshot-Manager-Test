@@ -1,0 +1,7 @@
+﻿<Solution>
+  <Project Path="LucasWritesBadCode.BowlingScoreCounter.csproj" />
+  <Project Path="LucasWritesBadCode.ScreenshoHelper.csproj" />
+  <Project Path="Scripts.csproj" />
+  <Project Path="LucasWritesBadCode.ScreenshotHelper.Tests.Editor.csproj" />
+  <Project Path="LucasWritesBadCode.BowlingScoreCounter.Tests.Editor.csproj" />
+</Solution>
