@@ -19,6 +19,9 @@ namespace LucasWritesBadCode.BowlingScoreCounter.Runtime
 
         public static ScoreResult GetScoreResult(string[] pinsKnockedOver)
         {
+            if (pinsKnockedOver == null)
+                throw new ArgumentNullException();
+
             List<FrameResult> frameResults = new List<FrameResult>();
             int currentFrame = 0;
 
@@ -39,7 +42,6 @@ namespace LucasWritesBadCode.BowlingScoreCounter.Runtime
                 }
 
                 frameResults.Add(GetFrameResult(frame));
-
             }
 
             return new ScoreResult
@@ -58,7 +60,6 @@ namespace LucasWritesBadCode.BowlingScoreCounter.Runtime
             return false;
         }
 
-        //im doing this the really bad way first so i can understand the logic
         private static List<FrameResult> HandleLastFrame(string frame)
         {
             List<FrameResult> lastFrameResults = new List<FrameResult>();
@@ -80,11 +81,16 @@ namespace LucasWritesBadCode.BowlingScoreCounter.Runtime
             {
                 if (i >= 3)
                 {
-                    throw new ArgumentOutOfRangeException("Too many attempts.");
+                    throw new Exception("Too many attempts.");
                 }
 
                 if (finalAttempt)
                 {
+                    if (i + 1 >= attemptsSeperated.Count)
+                    {
+                        throw new Exception("You can only have 2 attempts in the final frame for this game.");
+                    }
+
                     break;
                 }
 
@@ -109,6 +115,11 @@ namespace LucasWritesBadCode.BowlingScoreCounter.Runtime
                         i++;
                         break;
 
+                    case FrameResultType.Spare:
+                        currentFrameString = attemptsSeperated[i].ToString();
+                        framesSeparated.Add(currentFrameString);
+                        break;
+
                     case FrameResultType.Strike:
                         currentFrameString = attemptsSeperated[i].ToString();
                         framesSeparated.Add(currentFrameString);
@@ -126,32 +137,31 @@ namespace LucasWritesBadCode.BowlingScoreCounter.Runtime
 
         private static FrameResult GetFrameResult(string frame)
         {
-            FrameResultType frameType = FrameResultType.None;
-            int[] frameScores = new int[] { 0, 0 };
+            int[] frameScores = new int[2] { 0, 0 };
+            FrameResultType[] attemptResults = new FrameResultType[2];
             int currentAttempt = 0;
 
             foreach (char attempt in frame)
             {
                 if (currentAttempt > 1)
                 {
-                    throw new ArgumentOutOfRangeException("Too many attempts.");
+                    throw new Exception("Too many attempts.");
                 }
-
-                if (frameType == FrameResultType.Strike)
-                { break; }
 
                 int attemptScore = 0;
 
                 if (char.IsWhiteSpace(attempt))
                 { continue; }
 
-                frameType = GetFrameType(attempt);
-                CheckForExceptions(frameType, currentAttempt);
-                attemptScore = CalculateAttemptScore(attempt, frameType, frameScores[0]);
+                attemptResults[currentAttempt] = GetFrameType(attempt);
+                attemptScore = CalculateAttemptScore(attempt, attemptResults[currentAttempt], frameScores[0]);
 
                 frameScores[currentAttempt] = attemptScore;
                 currentAttempt++;
             }
+
+            CheckForExceptions(attemptResults, frameScores);
+            FrameResultType frameType = GetFrameType(attemptResults);
 
             return new FrameResult
             {
@@ -170,7 +180,7 @@ namespace LucasWritesBadCode.BowlingScoreCounter.Runtime
                     {
                         return int.Parse(numberOfPins.ToString());
                     }
-                    throw new ArgumentOutOfRangeException("Not a valid symbol. Please only use numbers, '/', 'X'");
+                    throw new Exception("Not a valid symbol. Please only use numbers, '/', 'X'");
 
                 case FrameResultType.Spare:
                     return MaxNumberOfPins - prevPins;
@@ -196,16 +206,40 @@ namespace LucasWritesBadCode.BowlingScoreCounter.Runtime
             }
         }
 
-        private static void CheckForExceptions(FrameResultType frameType, int currentAttempt)
+        private static FrameResultType GetFrameType(FrameResultType[] attemptResults)
         {
-            if (frameType == FrameResultType.Spare && currentAttempt == 0)
+            foreach (FrameResultType frameResult in attemptResults)
             {
-                throw new ArgumentOutOfRangeException("Spare can only be placed in the 2nd attempt.");
+                if (frameResult == FrameResultType.Strike || frameResult == FrameResultType.Spare)
+                {
+                    return frameResult;
+                }
             }
 
-            if (frameType == FrameResultType.Strike && currentAttempt == 1)
+            return FrameResultType.Number;
+        }
+
+        private static void CheckForExceptions(FrameResultType[] attemptTypes, int[] attemptScores)
+        {
+            if (attemptTypes[0] == FrameResultType.Spare)
             {
-                throw new ArgumentOutOfRangeException("Strike can only be placed in the 1st attempt.");
+                throw new Exception("Spare can only be placed in the 2nd attempt.");
+            }
+
+            if (attemptTypes[1] == FrameResultType.Strike)
+            {
+                throw new Exception("Strike can only be placed in the 1st attempt.");
+            }
+
+            if (attemptTypes[0] == FrameResultType.Strike && attemptScores[1] != 0)
+            {
+                throw new Exception("Strike cannot be followed by another score in the same frame");
+            }
+
+            if (attemptTypes[0] == FrameResultType.Number && attemptTypes[1] == FrameResultType.Number &&
+            attemptScores[0] + attemptScores[1] >= MaxNumberOfPins)
+            {
+                throw new Exception("Not a valid number of pins. If you hit 10 pins, use the spare '/' symbol.");
             }
         }
 
@@ -231,12 +265,6 @@ namespace LucasWritesBadCode.BowlingScoreCounter.Runtime
             {
                 attemptScore += attempt;
             }
-
-            if (frameResults[i].FrameType == FrameResultType.Number)
-                if (attemptScore >= MaxNumberOfPins)
-                {
-                    throw new ArgumentOutOfRangeException("Not a valid number of pins. If you hit 10 pins, use the spare '/' symbol.");
-                }
 
             if (i >= 9)
             {
